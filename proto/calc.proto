@@ -7,7 +7,6 @@ service Calculator{
 
 message DensityArguments{
     float x = 1;
-    uint32 n = 2;
 }
 
 message DensityResponse{
