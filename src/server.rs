@@ -22,7 +22,8 @@ impl Calculator for CalculatorService
     {
         let req = request.into_inner();
         
-        let result = (-req.x.powi(2)).exp() / f32::sqrt(2.0*PI);
+
+        let result = (-req.x.powi(2) / 2.0 ).exp() / (2.0*PI).sqrt();
 
         let reply = DensityResponse
         {
