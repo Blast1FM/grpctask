@@ -1,9 +1,7 @@
 use std::f32::consts::PI;
-use std::fmt::Error;
-use std::os::unix::net::SocketAddr;
 use tonic::{transport::Server, Request, Response, Status};
 
-use calc::{calculator_server};
+use calc::calculator_server::{Calculator, CalculatorServer};
 use calc::{DensityArguments, DensityResponse};
 
 pub mod calc{
@@ -17,7 +15,7 @@ pub struct CalculatorService
 }
 
 #[tonic::async_trait]
-impl calculator_server::Calculator for CalculatorService
+impl Calculator for CalculatorService
 {
     async fn calculate_density(&self, request: Request<DensityArguments>)
     ->Result<Response<DensityResponse>, Status>
@@ -38,8 +36,11 @@ impl calculator_server::Calculator for CalculatorService
 #[tokio::main]
 async fn main() -> Result<(),Box<dyn std::error::Error>> {
 
-    let addres:SocketAddr = "127.0.0.1:50051".parse()?;
+    let addres = "127.0.0.1:50051".parse()?;
 
+    let calculator_service = CalculatorService::default();
+
+    Server::builder().add_service(CalculatorServer::new(calculator_service)).serve(addres).await?;
 
     Ok(())
 
