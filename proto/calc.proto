@@ -1,17 +1,15 @@
 syntax = "proto3";
 package calc;
 
-Service Calculator{
+service Calculator{
     rpc CalculateDensity(DensityArguments) returns (DensityResponse);
 }
 
-message DensityArguments
-{
+message DensityArguments{
     float x = 1;
     uint32 n = 2;
 }
 
-message DensityResponse
-{
-    floax result = 1;
+message DensityResponse{
+    float result = 1;
 }
